@@ -4,6 +4,20 @@ import type { Task } from '@/domain/management/enterprise/entities/task'
 export class InMemoryTasksRepository implements TasksRepository {
   public items: Task[] = []
 
+  async list(params: { status: 'ALL' | 'PENDING' | 'COMPLETED' }): Promise<
+    Task[]
+  > {
+    if (params.status === 'ALL') {
+      return this.items
+    }
+
+    const filteredTasks = this.items.filter(
+      item => item.status === params.status
+    )
+
+    return filteredTasks
+  }
+
   async findById(taskId: string): Promise<Task | null> {
     const task = this.items.find(item => item.id.toString() === taskId)
 

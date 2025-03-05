@@ -20,8 +20,8 @@ export class Task extends Entity<TaskProps> {
     const task = new Task(
       {
         ...props,
-        createdAt: new Date(),
-        status: 'PENDING',
+        createdAt: props.createdAt ?? new Date(),
+        status: props.status ?? 'PENDING',
       },
       id
     )
