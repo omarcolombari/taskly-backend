@@ -73,5 +73,7 @@ export class Task extends Entity<TaskProps> {
 
   completeTask() {
     this.props.completedAt = new Date()
+    this.props.status = 'COMPLETED'
+    this.touch()
   }
 }
