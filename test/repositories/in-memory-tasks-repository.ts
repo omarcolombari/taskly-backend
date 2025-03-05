@@ -14,13 +14,19 @@ export class InMemoryTasksRepository implements TasksRepository {
     return task
   }
 
-  async save(task: Task): Promise<void> {
+  async delete(task: Task): Promise<void> {
     const itemIndex = this.items.findIndex(item => item.id === task.id)
 
-    this.items[itemIndex] = task
+    this.items.splice(itemIndex, 1)
   }
 
   async create(task: Task) {
     this.items.push(task)
+  }
+
+  async save(task: Task): Promise<void> {
+    const itemIndex = this.items.findIndex(item => item.id === task.id)
+
+    this.items[itemIndex] = task
   }
 }
