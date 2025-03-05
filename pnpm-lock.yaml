@@ -90,6 +90,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^3.0.7
         version: 3.0.7(vitest@3.0.7(@types/node@22.13.9)(terser@5.39.0))
+      dotenv:
+        specifier: ^16.4.7
+        version: 16.4.7
       globals:
         specifier: ^16.0.0
         version: 16.0.0
