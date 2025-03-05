@@ -1,4 +1,4 @@
-import { RegisterUserUseCase } from './register-user'
+import { CreateAccountUseCase } from './create-account'
 import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository'
 import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { makeUser } from 'test/factories/make-user'
@@ -7,17 +7,17 @@ import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 let inMemoryUsersRepository: InMemoryUsersRepository
 let fakeHasher: FakeHasher
 
-let sut: RegisterUserUseCase
+let sut: CreateAccountUseCase
 
-describe('Register User', () => {
+describe('Create Account', () => {
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository()
     fakeHasher = new FakeHasher()
 
-    sut = new RegisterUserUseCase(inMemoryUsersRepository, fakeHasher)
+    sut = new CreateAccountUseCase(inMemoryUsersRepository, fakeHasher)
   })
 
-  it('should be able to register a new user', async () => {
+  it('should be able to create a new account', async () => {
     const result = await sut.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -30,7 +30,7 @@ describe('Register User', () => {
     })
   })
 
-  it('should not be able to register a new user with already registered email', async () => {
+  it('should not be able to create a new account with already registered email', async () => {
     inMemoryUsersRepository.create(makeUser({ email: 'johndoe@example.com' }))
 
     const result = await sut.execute({
