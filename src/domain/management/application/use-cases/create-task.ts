@@ -1,7 +1,6 @@
 import { type Either, left, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
 import { Task } from '../../enterprise/entities/task'
-import type { HashGenerator } from '../cryptography/hash-generator'
 import type { TasksRepository } from '../repositories/tasks-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 

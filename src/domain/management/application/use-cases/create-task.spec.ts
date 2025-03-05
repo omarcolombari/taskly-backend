@@ -1,5 +1,3 @@
-import { RegisterUserUseCase } from './register-user'
-import { FakeHasher } from 'test/cryptography/fake-hasher'
 import { makeUser } from 'test/factories/make-user'
 import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
 import { CreateTaskUseCase } from './create-task'
