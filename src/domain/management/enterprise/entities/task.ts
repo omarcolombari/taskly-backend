@@ -13,11 +13,15 @@ export interface TaskProps {
 }
 
 export class Task extends Entity<TaskProps> {
-  static create(props: Optional<TaskProps, 'createdAt'>, id?: UniqueEntityId) {
+  static create(
+    props: Optional<TaskProps, 'createdAt' | 'status'>,
+    id?: UniqueEntityId
+  ) {
     const task = new Task(
       {
         ...props,
         createdAt: new Date(),
+        status: 'PENDING',
       },
       id
     )
