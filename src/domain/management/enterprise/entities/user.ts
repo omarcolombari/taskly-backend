@@ -1,5 +1,5 @@
-import { Entity } from '@/core/entity'
-import type { UniqueEntityId } from '@/core/unique-entity-id'
+import { Entity } from '@/core/entities/entity'
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id'
 
 export interface UserProps {
   name: string

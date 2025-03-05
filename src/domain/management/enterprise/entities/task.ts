@@ -1,6 +1,6 @@
-import { Entity } from '@/core/entity'
-import type { Optional } from '@/core/types/optional'
-import type { UniqueEntityId } from '@/core/unique-entity-id'
+import { Entity } from '@/core/entities/entity'
+import type { Optional } from '@/core/entities/types/optional'
+import type { UniqueEntityId } from '@/core/entities/unique-entity-id'
 
 export interface TaskProps {
   name: string
