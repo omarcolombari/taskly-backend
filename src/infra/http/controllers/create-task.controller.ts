@@ -1,18 +1,9 @@
-import {
-  BadRequestException,
-  Body,
-  Controller,
-  Post,
-  UseGuards,
-} from '@nestjs/common'
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { CreateTaskUseCase } from '@/domain/management/application/use-cases/create-task'
-import { Public } from '@/infra/auth/public'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
-// import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
-import { AuthGuard } from '@nestjs/passport'
 
 const createTaskBodySchema = z.object({
   name: z.string(),

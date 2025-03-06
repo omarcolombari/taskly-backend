@@ -10,6 +10,8 @@ import { CreateTaskController } from './controllers/create-task.controller'
 import { CreateTaskUseCase } from '@/domain/management/application/use-cases/create-task'
 import { EditTaskController } from './controllers/edit-task.controller'
 import { EditTaskUseCase } from '@/domain/management/application/use-cases/edit-task'
+import { CompleteTaskController } from './controllers/complete-task.controller'
+import { CompleteTaskUseCase } from '@/domain/management/application/use-cases/complete-task'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -18,12 +20,14 @@ import { EditTaskUseCase } from '@/domain/management/application/use-cases/edit-
     CreateAccountController,
     CreateTaskController,
     EditTaskController,
+    CompleteTaskController,
   ],
   providers: [
     AuthenticateUserUseCase,
     CreateAccountUseCase,
     CreateTaskUseCase,
     EditTaskUseCase,
+    CompleteTaskUseCase,
   ],
 })
 export class HttpModule {}
