@@ -5,6 +5,9 @@ import {
   Task,
   type TaskProps,
 } from '@/domain/management/enterprise/entities/task'
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { PrismaTaskMapper } from '@/infra/database/prisma/mappers/prisma-task-mapper'
 
 export function makeTask(
   override: Partial<TaskProps> = {},
@@ -21,4 +24,19 @@ export function makeTask(
   )
 
   return task
+}
+
+@Injectable()
+export class TaskFactory {
+  constructor(private prisma: PrismaService) {}
+
+  async makePrismaTask(data: Partial<TaskProps> = {}): Promise<Task> {
+    const task = makeTask(data)
+
+    await this.prisma.task.create({
+      data: PrismaTaskMapper.toPrisma(task),
+    })
+
+    return task
+  }
 }

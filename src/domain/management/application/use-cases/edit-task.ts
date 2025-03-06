@@ -1,7 +1,7 @@
 import { type Either, left, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
 import type { Task } from '../../enterprise/entities/task'
-import type { TasksRepository } from '../repositories/tasks-repository'
+import { TasksRepository } from '../repositories/tasks-repository'
 import { TaskNotFoundError } from './errors/task-not-found-error'
 
 interface EditTaskUseCaseRequest {
