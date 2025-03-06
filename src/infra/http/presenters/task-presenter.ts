@@ -8,7 +8,7 @@ export class TaskPresenter {
       description: task.description,
       status: task.status,
       completedAt: task.completedAt,
-      createdAt: task.completedAt,
+      createdAt: task.createdAt,
       updatedAt: task.updatedAt,
     }
   }
