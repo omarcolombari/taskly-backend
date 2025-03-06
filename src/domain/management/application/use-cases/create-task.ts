@@ -1,7 +1,7 @@
-import { type Either, left, right } from '@/core/either'
+import { type Either, right } from '@/core/either'
 import { Injectable } from '@nestjs/common'
 import { Task } from '../../enterprise/entities/task'
-import type { TasksRepository } from '../repositories/tasks-repository'
+import { TasksRepository } from '../repositories/tasks-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 
 interface CreateTaskUseCaseRequest {
