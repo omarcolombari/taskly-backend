@@ -11,22 +11,45 @@ import { z } from 'zod'
 import { AuthenticateUserUseCase } from '@/domain/management/application/use-cases/authenticate-user'
 import { WrongCredentialsError } from '@/domain/management/application/use-cases/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/public'
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger'
+import { extendApi } from '@anatine/zod-openapi'
+import { createZodDto } from '@anatine/zod-nestjs'
 
-const authenticateBodySchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-})
+const authenticateBodySchema = extendApi(
+  z.object({
+    email: z.string().email(),
+    password: z.string(),
+  })
+)
 
-type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>
+const authenticateResponse = extendApi(
+  z.object({
+    access_token: z.string(),
+  })
+)
 
+export class AuthenticateBodyDto extends createZodDto(authenticateBodySchema) {}
+export class AuthenticateResponseDto extends createZodDto(
+  authenticateResponse
+) {}
+
+const bodyValidationPipe = new ZodValidationPipe(authenticateBodySchema)
+
+@ApiTags('Auth')
 @Controller('/sessions')
 @Public()
 export class AuthenticateController {
   constructor(private authenticateUser: AuthenticateUserUseCase) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(authenticateBodySchema))
-  async handle(@Body() body: AuthenticateBodySchema) {
+  @ApiBody({ type: AuthenticateBodyDto })
+  @ApiCreatedResponse({ type: AuthenticateResponseDto })
+  async handle(@Body(bodyValidationPipe) body: AuthenticateBodyDto) {
     const { email, password } = body
 
     const result = await this.authenticateUser.execute({

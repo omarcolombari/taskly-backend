@@ -8,7 +8,9 @@ import {
 } from '@nestjs/common'
 import { CompleteTaskUseCase } from '@/domain/management/application/use-cases/complete-task'
 import { TaskNotFoundError } from '@/domain/management/application/use-cases/errors/task-not-found-error'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Tasks')
 @Controller('/tasks/:id/complete')
 export class CompleteTaskController {
   constructor(private completeTask: CompleteTaskUseCase) {}

@@ -5,6 +5,9 @@ import { ListTasksUseCase } from '@/domain/management/application/use-cases/list
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { TaskPresenter } from '../presenters/task-presenter'
+import { ApiResponse, ApiTags } from '@nestjs/swagger'
+import { extendApi } from '@anatine/zod-openapi'
+import { createZodDto } from '@anatine/zod-nestjs'
 
 const statusQueryParamSchema = z
   .enum(['all', 'pending', 'completed'])
@@ -16,11 +19,35 @@ const queryValidationPipe = new ZodValidationPipe(statusQueryParamSchema)
 
 type StatusQueryParamSchema = z.infer<typeof statusQueryParamSchema>
 
+const listTasksResponseSchema = extendApi(
+  z.object({
+    tasks: extendApi(
+      z.array(
+        z.object({
+          id: z.string(),
+          name: z.string(),
+          description: z.string(),
+          status: z.string(),
+          completedAt: z.string(),
+          createdAt: z.string(),
+          updatedAt: z.string(),
+        })
+      )
+    ),
+  })
+)
+
+export class ListTasksResponseDto extends createZodDto(
+  listTasksResponseSchema
+) {}
+
+@ApiTags('Tasks')
 @Controller('/tasks')
 export class ListTasksController {
   constructor(private listTasks: ListTasksUseCase) {}
 
   @Get()
+  @ApiResponse({ type: ListTasksResponseDto, status: 200 })
   async handle(
     @Query('status', queryValidationPipe) status: StatusQueryParamSchema,
     @CurrentUser() user: UserPayload

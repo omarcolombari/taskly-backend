@@ -10,24 +10,33 @@ import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { CreateAccountUseCase } from '@/domain/management/application/use-cases/create-account'
 import { UserAlreadyExistsError } from '@/domain/management/application/use-cases/errors/user-already-exists-error'
 import { Public } from '@/infra/auth/public'
+import { ApiBody, ApiTags } from '@nestjs/swagger'
+import { extendApi } from '@anatine/zod-openapi'
+import { createZodDto } from '@anatine/zod-nestjs'
 
-const createAccountBodySchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string(),
-})
+const createAccountBodySchema = extendApi(
+  z.object({
+    name: z.string(),
+    email: z.string().email(),
+    password: z.string(),
+  })
+)
 
 const bodyValidationPipe = new ZodValidationPipe(createAccountBodySchema)
 
-type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
+export class CreateAccountBodyDto extends createZodDto(
+  createAccountBodySchema
+) {}
 
+@ApiTags('Auth')
 @Controller('/accounts')
 @Public()
 export class CreateAccountController {
   constructor(private createAccount: CreateAccountUseCase) {}
 
   @Post()
-  async handle(@Body(bodyValidationPipe) body: CreateAccountBodySchema) {
+  @ApiBody({ type: CreateAccountBodyDto })
+  async handle(@Body(bodyValidationPipe) body: CreateAccountBodyDto) {
     const { name, email, password } = body
 
     const result = await this.createAccount.execute({

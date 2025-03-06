@@ -4,23 +4,31 @@ import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { CreateTaskUseCase } from '@/domain/management/application/use-cases/create-task'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
+import { ApiBody, ApiTags } from '@nestjs/swagger'
 
-const createTaskBodySchema = z.object({
-  name: z.string(),
-  description: z.string(),
-})
+import { createZodDto } from '@anatine/zod-nestjs'
+import { extendApi } from '@anatine/zod-openapi'
+
+export const createTaskBodySchema = extendApi(
+  z.object({
+    name: z.string(),
+    description: z.string(),
+  })
+)
+
+export class CreateTaskBodyDto extends createZodDto(createTaskBodySchema) {}
 
 const bodyValidationPipe = new ZodValidationPipe(createTaskBodySchema)
 
-type CreateTaskBodySchema = z.infer<typeof createTaskBodySchema>
-
+@ApiTags('Tasks')
 @Controller('/tasks')
 export class CreateTaskController {
   constructor(private createTask: CreateTaskUseCase) {}
 
   @Post()
+  @ApiBody({ type: CreateTaskBodyDto })
   async handle(
-    @Body(bodyValidationPipe) body: CreateTaskBodySchema,
+    @Body(bodyValidationPipe) body: CreateTaskBodyDto,
     @CurrentUser() user: UserPayload
   ) {
     const { name, description } = body

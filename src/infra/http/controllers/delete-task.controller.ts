@@ -8,7 +8,9 @@ import {
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { DeleteTaskUseCase } from '@/domain/management/application/use-cases/delete-task'
+import { ApiTags } from '@nestjs/swagger'
 
+@ApiTags('Tasks')
 @Controller('/tasks/:id')
 export class DeleteTaskController {
   constructor(private deleteTask: DeleteTaskUseCase) {}
