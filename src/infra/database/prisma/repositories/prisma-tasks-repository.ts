@@ -21,10 +21,19 @@ export class PrismaTasksRepository implements TasksRepository {
 
     return PrismaTaskMapper.toDomain(task)
   }
-  async list(params: { status: 'ALL' | 'PENDING' | 'COMPLETED' }): Promise<
-    Task[]
-  > {
-    const where = params.status === 'ALL' ? {} : { status: params.status }
+  async listByUserId(
+    params: { status: 'ALL' | 'PENDING' | 'COMPLETED' },
+    userId: string
+  ): Promise<Task[]> {
+    const where =
+      params.status === 'ALL'
+        ? {
+            userId,
+          }
+        : {
+            status: params.status,
+            userId,
+          }
 
     const tasks = await this.prisma.task.findMany({
       where,
