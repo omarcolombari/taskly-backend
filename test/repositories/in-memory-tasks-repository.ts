@@ -4,15 +4,16 @@ import type { Task } from '@/domain/management/enterprise/entities/task'
 export class InMemoryTasksRepository implements TasksRepository {
   public items: Task[] = []
 
-  async list(params: { status: 'ALL' | 'PENDING' | 'COMPLETED' }): Promise<
-    Task[]
-  > {
+  async listByUserId(
+    params: { status: 'ALL' | 'PENDING' | 'COMPLETED' },
+    userId: string
+  ): Promise<Task[]> {
     if (params.status === 'ALL') {
-      return this.items
+      return this.items.filter(item => item.userId.toString() === userId)
     }
 
     const filteredTasks = this.items.filter(
-      item => item.status === params.status
+      item => item.status === params.status && item.userId.toString() === userId
     )
 
     return filteredTasks

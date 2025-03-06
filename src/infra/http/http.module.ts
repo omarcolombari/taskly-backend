@@ -12,6 +12,8 @@ import { EditTaskController } from './controllers/edit-task.controller'
 import { EditTaskUseCase } from '@/domain/management/application/use-cases/edit-task'
 import { CompleteTaskController } from './controllers/complete-task.controller'
 import { CompleteTaskUseCase } from '@/domain/management/application/use-cases/complete-task'
+import { ListTasksController } from './controllers/list-tasks.controller'
+import { ListTasksUseCase } from '@/domain/management/application/use-cases/list-tasks'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -21,6 +23,7 @@ import { CompleteTaskUseCase } from '@/domain/management/application/use-cases/c
     CreateTaskController,
     EditTaskController,
     CompleteTaskController,
+    ListTasksController,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -28,6 +31,7 @@ import { CompleteTaskUseCase } from '@/domain/management/application/use-cases/c
     CreateTaskUseCase,
     EditTaskUseCase,
     CompleteTaskUseCase,
+    ListTasksUseCase,
   ],
 })
 export class HttpModule {}
