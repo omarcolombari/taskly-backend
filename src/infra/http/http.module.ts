@@ -14,6 +14,8 @@ import { CompleteTaskController } from './controllers/complete-task.controller'
 import { CompleteTaskUseCase } from '@/domain/management/application/use-cases/complete-task'
 import { ListTasksController } from './controllers/list-tasks.controller'
 import { ListTasksUseCase } from '@/domain/management/application/use-cases/list-tasks'
+import { DeleteTaskController } from './controllers/delete-task.controller'
+import { DeleteTaskUseCase } from '@/domain/management/application/use-cases/delete-task'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -24,6 +26,7 @@ import { ListTasksUseCase } from '@/domain/management/application/use-cases/list
     EditTaskController,
     CompleteTaskController,
     ListTasksController,
+    DeleteTaskController,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -32,6 +35,7 @@ import { ListTasksUseCase } from '@/domain/management/application/use-cases/list
     EditTaskUseCase,
     CompleteTaskUseCase,
     ListTasksUseCase,
+    DeleteTaskUseCase,
   ],
 })
 export class HttpModule {}
