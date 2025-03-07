@@ -70,7 +70,7 @@ Antes de iniciar, você precisará ter instalado:
 5. Execute as migrações do Prisma:
 
    ```sh
-   pnpm prisma migrate deploy
+   pnpm prisma migrate dev
    ```
 
 6. Inicie a API:
