@@ -13,6 +13,22 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 - [Swagger](https://swagger.io/) - Documentação dos endpoints
 - [Vitest](https://vitest.dev/) - Testes unitários e de integração
 
+## 📝 Decisões Técnicas
+
+### Arquitetura e Padrões
+
+O projeto segue os conceitos de **Domain-Driven Design (DDD)** e **Clean Architecture** para garantir escalabilidade e manutenibilidade. Essas escolhas permitem:
+
+- Separar responsabilidades entre camadas, facilitando testes e evolução do sistema.
+- Garantir que a lógica de negócio não esteja acoplada a frameworks ou tecnologias específicas.
+- Melhor organização do código, reduzindo a complexidade conforme o projeto cresce.
+
+A estrutura do projeto está organizada em:
+
+- **Domain**: Contém entidades, repositórios, regras de negócio e a camada de aplicação (casos de uso), que está dividida entre os domínios.
+- **Infra**: Responsável pela persistência de dados e comunicação externa.
+
+
 ## 📋 Pré-requisitos
 
 Antes de iniciar, você precisará ter instalado:
