@@ -12,15 +12,15 @@ async function bootstrap() {
 
   const port = envService.get('PORT')
   const config = new DocumentBuilder()
-    .setTitle('Tasks API')
+    .setTitle('Taskly')
     .setDescription('API para gerenciamento de tarefas')
     .setVersion('1.0')
     .build()
 
   const documentFactory = () => SwaggerModule.createDocument(app, config)
 
-  SwaggerModule.setup('api', app, documentFactory, {
-    jsonDocumentUrl: 'api/json',
+  SwaggerModule.setup('docs', app, documentFactory, {
+    jsonDocumentUrl: 'docs/json',
   })
 
   await app.listen(port)
