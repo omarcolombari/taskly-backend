@@ -16,6 +16,8 @@ import { ListTasksController } from './controllers/list-tasks.controller'
 import { ListTasksUseCase } from '@/domain/management/application/use-cases/list-tasks'
 import { DeleteTaskController } from './controllers/delete-task.controller'
 import { DeleteTaskUseCase } from '@/domain/management/application/use-cases/delete-task'
+import { GetProfileInformationController } from './controllers/get-profile-information.controller'
+import { GetProfileInformationUseCase } from '@/domain/management/application/use-cases/get-profile-information'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -27,6 +29,7 @@ import { DeleteTaskUseCase } from '@/domain/management/application/use-cases/del
     CompleteTaskController,
     ListTasksController,
     DeleteTaskController,
+    GetProfileInformationController,
   ],
   providers: [
     AuthenticateUserUseCase,
@@ -36,6 +39,7 @@ import { DeleteTaskUseCase } from '@/domain/management/application/use-cases/del
     CompleteTaskUseCase,
     ListTasksUseCase,
     DeleteTaskUseCase,
+    GetProfileInformationUseCase,
   ],
 })
 export class HttpModule {}
