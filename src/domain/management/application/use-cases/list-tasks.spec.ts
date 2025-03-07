@@ -3,6 +3,7 @@ import { makeTask } from 'test/factories/make-task'
 import { ListTasksUseCase } from './list-tasks'
 import { InMemoryUsersRepository } from 'test/repositories/in-memory-users-repository'
 import { makeUser } from 'test/factories/make-user'
+import { UserNotFoundError } from './errors/user-not-found-error'
 
 let inMemoryTasksRepository: InMemoryTasksRepository
 let inMemoryUsersRepository: InMemoryUsersRepository
@@ -12,7 +13,7 @@ describe('List tasks', () => {
   beforeEach(() => {
     inMemoryTasksRepository = new InMemoryTasksRepository()
     inMemoryUsersRepository = new InMemoryUsersRepository()
-    sut = new ListTasksUseCase(inMemoryTasksRepository)
+    sut = new ListTasksUseCase(inMemoryTasksRepository, inMemoryUsersRepository)
   })
 
   it('should be able to list all tasks', async () => {
@@ -33,7 +34,9 @@ describe('List tasks', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(result.value?.tasks).toHaveLength(5)
+    if (result.isRight()) {
+      expect(result.value?.tasks).toHaveLength(5)
+    }
   })
 
   it('should be able to list completed tasks', async () => {
@@ -54,7 +57,9 @@ describe('List tasks', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(result.value?.tasks).toHaveLength(2)
+    if (result.isRight()) {
+      expect(result.value?.tasks).toHaveLength(2)
+    }
   })
 
   it('should be able to list pending tasks', async () => {
@@ -75,6 +80,26 @@ describe('List tasks', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(result.value?.tasks).toHaveLength(3)
+    if (result.isRight()) {
+      expect(result.value?.tasks).toHaveLength(3)
+    }
+  })
+
+  it('should not be able to list when user not exists', async () => {
+    inMemoryTasksRepository.items.push(
+      makeTask(),
+      makeTask(),
+      makeTask(),
+      makeTask(),
+      makeTask()
+    )
+
+    const result = await sut.execute({
+      status: 'COMPLETED',
+      userId: 'fake-user-id',
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(UserNotFoundError)
   })
 })

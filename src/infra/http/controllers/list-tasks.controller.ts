@@ -1,4 +1,10 @@
-import { BadRequestException, Controller, Get, Query } from '@nestjs/common'
+import {
+  BadRequestException,
+  Controller,
+  Get,
+  Query,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { ListTasksUseCase } from '@/domain/management/application/use-cases/list-tasks'
@@ -13,6 +19,7 @@ import {
 } from '@nestjs/swagger'
 import { extendApi } from '@anatine/zod-openapi'
 import { createZodDto } from '@anatine/zod-nestjs'
+import { UserNotFoundError } from '@/domain/management/application/use-cases/errors/user-not-found-error'
 
 const statusQueryParamSchema = z
   .enum(['all', 'pending', 'completed'])
@@ -67,7 +74,14 @@ export class ListTasksController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      const error = result.value
+
+      switch (error.constructor) {
+        case UserNotFoundError:
+          throw new UnauthorizedException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
 
     const tasks = result.value.tasks

@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common'
 import {
   ApiBearerAuth,
@@ -55,7 +56,7 @@ export class GetProfileInformationController {
 
       switch (error.constructor) {
         case UserNotFoundError:
-          throw new NotFoundException(error.message)
+          throw new UnauthorizedException(error.message)
         default:
           throw new BadRequestException(error.message)
       }
