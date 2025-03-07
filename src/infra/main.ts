@@ -12,6 +12,7 @@ async function bootstrap() {
 
   const port = envService.get('PORT')
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Taskly')
     .setDescription('API para gerenciamento de tarefas')
     .setVersion('1.0')

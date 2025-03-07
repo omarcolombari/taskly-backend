@@ -11,6 +11,7 @@ import { AuthenticateUserUseCase } from '@/domain/management/application/use-cas
 import { WrongCredentialsError } from '@/domain/management/application/use-cases/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/public'
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiCreatedResponse,
   ApiOperation,
@@ -46,6 +47,7 @@ export class AuthenticateController {
   constructor(private authenticateUser: AuthenticateUserUseCase) {}
 
   @Post()
+  @ApiBearerAuth()
   @ApiOperation({ operationId: 'signIn' })
   @ApiBody({ type: AuthenticateBodyDto })
   @ApiCreatedResponse({ type: AuthenticateResponseDto })

@@ -4,7 +4,12 @@ import {
   Get,
   NotFoundException,
 } from '@nestjs/common'
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { GetProfileInformationUseCase } from '@/domain/management/application/use-cases/get-profile-information'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
@@ -35,6 +40,7 @@ export class GetProfileInformationController {
   constructor(private getProfileInformation: GetProfileInformationUseCase) {}
 
   @Get()
+  @ApiBearerAuth()
   @ApiOperation({ operationId: 'getProfileInformation' })
   @ApiResponse({ type: GetProfileInformationResponseDto, status: 200 })
   async handle(@CurrentUser() user: UserPayload) {

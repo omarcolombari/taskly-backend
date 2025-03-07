@@ -11,7 +11,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { EditTaskUseCase } from '@/domain/management/application/use-cases/edit-task'
 import { TaskNotFoundError } from '@/domain/management/application/use-cases/errors/task-not-found-error'
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { extendApi } from '@anatine/zod-openapi'
 import { createZodDto } from '@anatine/zod-nestjs'
 
@@ -31,6 +31,7 @@ export class EditTaskController {
   constructor(private editTask: EditTaskUseCase) {}
 
   @Put()
+  @ApiBearerAuth()
   @HttpCode(204)
   @ApiOperation({ operationId: 'editTask' })
   @ApiBody({ type: EditTaskBodyDto })
