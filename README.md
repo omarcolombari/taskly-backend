@@ -11,6 +11,7 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 - [PostgreSQL](https://www.postgresql.org/) - Banco de dados relacional
 - [Docker](https://www.docker.com/) - Para conteinerização do PostgreSQL
 - [Swagger](https://swagger.io/) - Documentação dos endpoints
+- [Vitest](https://vitest.dev/) - Testes unitários e de integração
 
 ## 📋 Pré-requisitos
 
@@ -25,7 +26,7 @@ Antes de iniciar, você precisará ter instalado:
 1. Clone o repositório:
 
    ```sh
-   git clone https://github.com/seu-usuario/taskly-backend.git
+   git clone https://github.com/omarcolombari/taskly-backend.git
    cd taskly-backend
    ```
 
@@ -61,10 +62,18 @@ Antes de iniciar, você precisará ter instalado:
    ```sh
    pnpm start:dev
    ```
-7. Ela está rodando na URL:
 
+## 📝 Testes
+
+O backend está completamente testado com testes unitários e de integração utilizando Vitest.
+
+- Para rodar os testes unitários e e2e:
+
+   ```sh
+   pnpm test
    ```
-   http://localhost:3333/
+   ```sh
+   pnpm test:e2e
    ```
 
 ## 📌 Funcionalidades
@@ -74,6 +83,7 @@ Antes de iniciar, você precisará ter instalado:
 - Arquitetura baseada em DDD e Clean Architecture
 - Banco de dados PostgreSQL gerenciado via Prisma
 - Documentação interativa via Swagger
+- Testes unitários e de integração com Vitest
 
 ## 📼 Documentação da API
 
@@ -81,4 +91,9 @@ A documentação interativa dos endpoints pode ser acessada após iniciar a API:
 
 ```
 http://localhost:3333/docs
+```
+
+Ou nesse para acessar o schema:
+```
+http://localhost:3333/docs/json
 ```
