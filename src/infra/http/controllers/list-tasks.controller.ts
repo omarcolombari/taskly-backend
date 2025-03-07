@@ -5,7 +5,7 @@ import { ListTasksUseCase } from '@/domain/management/application/use-cases/list
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { TaskPresenter } from '../presenters/task-presenter'
-import { ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { extendApi } from '@anatine/zod-openapi'
 import { createZodDto } from '@anatine/zod-nestjs'
 
@@ -47,6 +47,7 @@ export class ListTasksController {
   constructor(private listTasks: ListTasksUseCase) {}
 
   @Get()
+  @ApiOperation({ operationId: 'listTasks' })
   @ApiResponse({ type: ListTasksResponseDto, status: 200 })
   async handle(
     @Query('status', queryValidationPipe) status: StatusQueryParamSchema,

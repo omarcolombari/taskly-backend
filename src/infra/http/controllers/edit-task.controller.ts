@@ -11,7 +11,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { EditTaskUseCase } from '@/domain/management/application/use-cases/edit-task'
 import { TaskNotFoundError } from '@/domain/management/application/use-cases/errors/task-not-found-error'
-import { ApiBody, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { extendApi } from '@anatine/zod-openapi'
 import { createZodDto } from '@anatine/zod-nestjs'
 
@@ -32,6 +32,7 @@ export class EditTaskController {
 
   @Put()
   @HttpCode(204)
+  @ApiOperation({ operationId: 'editTask' })
   @ApiBody({ type: EditTaskBodyDto })
   async handle(
     @Body(bodyValidationPipe) body: EditTaskBodyDto,

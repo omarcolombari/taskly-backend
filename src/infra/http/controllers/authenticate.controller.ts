@@ -4,7 +4,6 @@ import {
   Controller,
   Post,
   UnauthorizedException,
-  UsePipes,
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
@@ -14,7 +13,7 @@ import { Public } from '@/infra/auth/public'
 import {
   ApiBody,
   ApiCreatedResponse,
-  ApiResponse,
+  ApiOperation,
   ApiTags,
 } from '@nestjs/swagger'
 import { extendApi } from '@anatine/zod-openapi'
@@ -47,6 +46,7 @@ export class AuthenticateController {
   constructor(private authenticateUser: AuthenticateUserUseCase) {}
 
   @Post()
+  @ApiOperation({ operationId: 'signIn' })
   @ApiBody({ type: AuthenticateBodyDto })
   @ApiCreatedResponse({ type: AuthenticateResponseDto })
   async handle(@Body(bodyValidationPipe) body: AuthenticateBodyDto) {

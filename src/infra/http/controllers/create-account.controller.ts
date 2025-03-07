@@ -10,7 +10,7 @@ import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { CreateAccountUseCase } from '@/domain/management/application/use-cases/create-account'
 import { UserAlreadyExistsError } from '@/domain/management/application/use-cases/errors/user-already-exists-error'
 import { Public } from '@/infra/auth/public'
-import { ApiBody, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { extendApi } from '@anatine/zod-openapi'
 import { createZodDto } from '@anatine/zod-nestjs'
 
@@ -35,6 +35,7 @@ export class CreateAccountController {
   constructor(private createAccount: CreateAccountUseCase) {}
 
   @Post()
+  @ApiOperation({ operationId: 'signUp' })
   @ApiBody({ type: CreateAccountBodyDto })
   async handle(@Body(bodyValidationPipe) body: CreateAccountBodyDto) {
     const { name, email, password } = body

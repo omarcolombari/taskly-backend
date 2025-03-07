@@ -4,7 +4,7 @@ import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { CreateTaskUseCase } from '@/domain/management/application/use-cases/create-task'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
-import { ApiBody, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
 
 import { createZodDto } from '@anatine/zod-nestjs'
 import { extendApi } from '@anatine/zod-openapi'
@@ -26,6 +26,7 @@ export class CreateTaskController {
   constructor(private createTask: CreateTaskUseCase) {}
 
   @Post()
+  @ApiOperation({ operationId: 'createTask' })
   @ApiBody({ type: CreateTaskBodyDto })
   async handle(
     @Body(bodyValidationPipe) body: CreateTaskBodyDto,
