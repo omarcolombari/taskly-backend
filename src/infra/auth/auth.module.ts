@@ -17,8 +17,13 @@ import { JwtAuthGuard } from './jwt-auth.guard'
       useFactory(env: EnvService) {
         const secret = env.get('JWT_SECRET')
 
+        const ONE_DAY_IN_SECONDS = 60 * 60 * 24
+
         return {
           secret,
+          signOptions: {
+            expiresIn: ONE_DAY_IN_SECONDS,
+          },
         }
       },
     }),
